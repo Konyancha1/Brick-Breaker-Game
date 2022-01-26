@@ -1,0 +1,136 @@
+Parent Class: GameObjects(object)
+Contains the position and actions performed by the objects that form the game
+def __init__(self, canvas, item):
+	Initializes attributes of the class
+def position(self):
+	Returns coordinates position of items in the game
+def move(self,x-coordinate, y-coordinate):
+	Function to move canvas objects
+def destroy(self):
+	Function to delete canvas objects
+  
+Child Class 1: Ball(GameObjects):
+def __init__(self, canvas, x-coordinate, y-coordinate):
+	Initializes properties of the ball including size, direction and speed
+def update_pos(self):
+	Initialize variable coords with coordinates of ball on the canvas
+	Initialize variable width with dimensions of canvas
+
+ Handling what happens when the ball hits the left and right canvas walls
+ IF current horizontal position <= 0 or current horizontal position >= width of canvas:
+   horizontal component of ball *= -1
+   
+ Handling what happens when the ball hits the top and bottom canvas walls
+ IF current verical position <= 0 or current vertical position>= height of canvas:
+   vertical component *= -1
+   
+ Scale the direction vector by the speed of the ball
+ x = horizontal component * speed of ball
+ y = vertical component * speed of ball
+ 
+ Move the ball
+ self.move(x, y)
+ 
+def hit_brick(self, game_objects):
+	Initialize variable coords with coordinates of ball on the canvas
+	x = (current horizontal position of ball + current vertical position of ball) * 0.5
+ 	IF number of bricks hit at the same time > 1:
+     vertical component *= -1
+  ELIF number of bricks hit at the same time == 1:
+     game_object = game_objects[0]
+     coords = position of brick object
+     IF x > vertical component:
+       horizontal component = 1
+     ELIF x < horizontal component:
+       horizontal component = -1
+  ELSE:
+     vertical component *= -1
+  
+  Looping through game_object in game_objects:
+  IF create instance(game_object, Brick):
+     game_object.hit()
+     
+     
+Child Class 2: Board(GameObjects):
+Defines the shape of the board as well as what happens when it hits the ball and function for the movement of the board
+def __init__(self, canvas, x-coordinate, y-coordinate):
+	Initializes properties of the board including size and shape
+def movement(self, offset):
+	Initialize variable coords with coordinates of ball on the canvas
+  Initialize variable width with dimensions of canvas
+  IF horizonatal position of board + offset >= 0 and vertical position of board + offset <= width of canvas:
+    super(Board, self).move(offset, 0)
+  IF self.ball is not None:
+    self.ball.move(offset, 0)
+def reset_ball_position(self, ball):
+	self.ball = ball
+
+Child Class 3: Brick(GameObject):
+Defines the colors of the brick depending on the level that they are on. This class also holds what happens when the bricks are hit.
+def __init__(self, canvas, x-coordinate, y-coordinate, hits):
+	Initializes properties of the bricks such as colors, size as well as the the variable hit that keeps count when a brick is hit
+def Hit(self):
+	number of hits decreases by 1 when a brick is hit
+	IF number of hits remaining in a brick == 0:
+		brick gets deleted
+	ELSE:
+		Brick color changes
+    
+Game Class: BreakoutGame(tk.Frame):
+This class controls how the game runs.
+In this class, we will define:
+1. The number of lives, styling of the canvas i.e background colors, font, etc
+2. The game setup i.e telling the user to click on the ‘Click to Start’ to start the game etc
+3. Adding the game objects(ball, bricks, and board)
+4. Handling of lives and also the level of difficulty
+5. Starting the game and running the game in a loop
+
+def __init__(self, master):
+	Initializes canvas background color, size, adds the game objects(ball, board, bricks) as well as defines which key on the keyboard moves the board
+def setup_game(self):
+  add ball(self.add_ball)
+  show number of lives(self.update_lives)
+  self.text = self.show_text(font, ‘Insert text that tells user how to start game’)
+  self.canvas.bind('Button on screen/ Key on keyboard that starts game ',command to start game)
+  
+def update_lives(self):
+	text = ‘Text displaying number of lives in game’, number of lives
+	
+  Creating instance of object before being called
+  IF self.hud is None:
+  self.hud = self.show_text(x-coordinate, y-coordinate, text to be displayed, size of text)
+  ELSE:
+    self.canvas.itemconfig(self.hud,text=text)
+def loop(self):
+  self.check_collisions()
+  num_bricks = tuple containing total number of bricks on canvas
+  IF num_bricks == 0: 
+    ball speed = None
+    self.show_text(size of text, 'Insert text to show game won')
+    play victory sound
+  ELIF current ball positionn >= height of canvas: 
+    speed of ball = None
+    number of lives decreases by 1
+  IF number of lives < 0:
+    self.show_text(size of text, 'Insert text to show game lost')
+    play loser sound
+  ELSE:	
+    Game sets up again
+    play sound when a life is lost
+  ELSE:
+    Get the new ball position
+    Loop the game
+def add_ball(self):
+    Create new instance of a ball on the board
+def add_brick(self):
+    Create new instance of brick on the canvas
+def show_text(self, x-coordinate, y-coordinate, text to be displayed, size of text):
+    Returns text to be displayed	
+def collisions(self):
+    Get the ball coordinates on the canvas
+    Check the balls collisions such that we filter out items that can be hit by the ball i.e the bricks and append to an empty list
+def play(self):
+    self.canvas.unbind('Button on screen/ Key on keyboard that starts game')
+    Delete the text pop up that shows user how to start the game
+    self.board.ball = None
+    Loop the game

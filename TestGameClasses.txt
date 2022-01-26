@@ -1,0 +1,80 @@
+Class GameObjects(object):
+  def move_function(self):
+    pass
+  def delete_function(self):
+    pass
+  def get_position_function(self):
+    pass
+    
+Class Ball(GameObject):
+  def updating(self):
+     pass
+  def colliding(self):
+     pass
+      
+Class Board(GameObject):
+  def set_ball(self):
+     pass
+  def board_movement(self):
+     pass
+      
+Class Brick(GameObject):
+  def hit(self):
+     pass
+      
+Class BreakoutGame(object):
+  def setup_game(self):
+    pass
+  def game_loop(self):
+    pass
+  def start_game(self):
+    pass
+  def check_collisions(self):
+    pass
+  def add_ball(self):
+    pass
+  def add_brick(self):
+    pass
+  def draw_text(self):
+    pass
+  def update_lives_text(self):
+    pass
+ 
+ Test Case scenarios for the class methods
+ 
+ Class TestGameClass(unittest.TestCase):
+  def test_move_function(self):
+    pass
+  def test_delete_function(self):
+    pass
+  def test_get_position_function(self):
+    pass
+  def test_ball_reaction_on_hitting_wall(self):
+    pass
+  def test_ball_reaction_on_colliding_game_objects(self):
+    pass
+  def test_how_board_moves(self):
+    pass
+  def test_ball_position_on_board(self):
+    pass
+  def test_brick_hit(self):
+    pass
+  def test_how_game_starts(self):
+    pass
+  def test_how_ball_added(self):
+    pass
+  def test_how_brick_added(self):
+    pass
+  def test_how_collision_happens(self):
+    pass
+  def test_how_game_runs(self):
+    pass
+  def test_how_lives_updated(self):
+    pass
+  def test_game_setup(self):
+    pass
+    
+ Call the main function
+ if __name__ == '__main__':
+  unittest.main()
+   
